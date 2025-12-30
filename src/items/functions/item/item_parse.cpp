@@ -91,6 +91,7 @@ void ItemParse::initParse(const std::string &stringValue, pugi::xml_node attribu
 	ItemParse::parseUnscriptedItems(stringValue, attributeNode, valueAttribute, itemType);
 	ItemParse::parseElementalBond(stringValue, valueAttribute, itemType);
 	ItemParse::parseMantra(stringValue, valueAttribute, itemType);
+	ItemParse::parseUpgradeClassification(stringValue, valueAttribute, itemType);
 }
 
 void ItemParse::parseDummyRate(pugi::xml_node attributeNode, ItemType &itemType) {
@@ -1310,5 +1311,11 @@ void ItemParse::parseMantra(const std::string &stringValue, pugi::xml_attribute 
 		abilities.mantraAbsorbValue[combatTypeToIndex(COMBAT_EARTHDAMAGE)] += value;
 		abilities.mantraAbsorbValue[combatTypeToIndex(COMBAT_ICEDAMAGE)] += value;
 		itemType.mantra = value;
+	}
+}
+
+void ItemParse::parseUpgradeClassification(const std::string &stringValue, pugi::xml_attribute valueAttribute, ItemType &itemType) {
+	if (stringValue == "upgradeclassification") {
+		itemType.upgradeClassification = pugi::cast<uint8_t>(valueAttribute.value());
 	}
 }
